@@ -8,5 +8,5 @@ public class UrlConstant {
     public static final String ITUDE_ORDERS = "https://shimo.im/docs/RhPWRkYY8wJ8qP6P/read";
 
     public static final String SERVER_JIANG_KEY = "SCT40844Tt8ME3qQUDEbLVJDve2cHVgY4";
-    public static final String SERVER_JIANG_PUSH = "https://sctapi.ftqq.com/" + SERVER_JIANG_KEY  + ".send";
+    public static final String SERVER_JIANG_PUSH = "http://sctapi.ftqq.com/" + SERVER_JIANG_KEY  + ".send";
 }

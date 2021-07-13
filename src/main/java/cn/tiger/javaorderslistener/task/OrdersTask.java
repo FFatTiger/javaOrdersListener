@@ -39,7 +39,7 @@ public class OrdersTask {
 
     private String cacheMsg = "";
 
-    @Scheduled(fixedRate = 3 * 60 * 60 * 1000)
+    @Scheduled(fixedRate = 5 * 60 * 1000)
     public void ordersScan() throws IOException {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(UrlConstant.ITUDE_ORDERS, String.class);
 

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author tiger
@@ -15,6 +17,9 @@ import java.util.List;
 @Component
 public class ITUDEOrdersParse implements HtmlParse<Document> {
 
+    private static final Pattern pattern = Pattern.compile("编程语言[\\s\\S]*java", Pattern.CASE_INSENSITIVE);
+    private static final Pattern pattern1 = Pattern.compile("编号：[A-Za-z0-9]+", Pattern.CASE_INSENSITIVE);
+
 
     @Override
     public String parse(Document sourceData) {
@@ -22,10 +27,16 @@ public class ITUDEOrdersParse implements HtmlParse<Document> {
         Iterator<Element> p = sourceData.getElementsByTag("p").iterator();
         boolean findFlag = false;
         StringBuilder frame = new StringBuilder();
+        String tag = "";
         while (p.hasNext()) {
             Element element = p.next();
             String html = element.html();
-            if (!findFlag && html.matches("编程语言[\\s\\S]*java")) {
+            Matcher matcher = pattern1.matcher(html);
+            if (matcher.find()) {
+                tag = matcher.group();
+            }
+            if (!findFlag && pattern.matcher(html).find()) {
+                frame.append("## " + tag + "  \n");
                 findFlag = true;
             }
 
@@ -34,7 +45,7 @@ public class ITUDEOrdersParse implements HtmlParse<Document> {
             }
 
             if (findFlag) {
-                frame.append(element.text() + "\n");
+                frame.append( "* " + element.text() + "  \n");
             }
 
         }

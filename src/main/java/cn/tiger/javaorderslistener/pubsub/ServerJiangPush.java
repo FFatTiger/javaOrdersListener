@@ -27,7 +27,7 @@ public class ServerJiangPush implements Pusher{
     @Override
     public boolean push(Object msg) throws JsonProcessingException {
 
-        if (StringUtils.hasLength((String) msg)) {
+        if (!StringUtils.hasLength((String) msg)) {
             return false;
         }
         ServerJiangSendEntity sendEntity = new ServerJiangSendEntity();
@@ -38,10 +38,10 @@ public class ServerJiangPush implements Pusher{
         postParameters.add("title", sendEntity.getTitle());
         postParameters.add("desp", sendEntity.getDesp());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/x-www-form-urlencoded");
+//        headers.add("Content-Type", "application/x-www-form-urlencoded");
         HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(postParameters, headers);
         String response = restTemplate.postForObject(UrlConstant.SERVER_JIANG_PUSH, httpEntity, String.class);
-
+        System.out.println(response);
         return true;
     }
 }
